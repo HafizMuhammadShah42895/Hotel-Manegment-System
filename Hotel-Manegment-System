@@ -1,0 +1,200 @@
+//____________________________________________STARTING PROJECT____________________________________________________________
+
+// Header Files Used in this Project
+
+#include <iostream>
+#include<fstream>
+#include <iomanip>
+using namespace std;
+
+
+// Globle Variables Used in this Project
+
+    int totalTime;
+    int totalBill;
+
+    void kimsdhaba(int menu); //1 st Function Declaration
+    
+	
+    void orderandbill(int waiter); //2 nd Function Declaration
+    
+    int getInvoiceNo();//3 rd Function Declaration
+    
+//Main Body of this Program
+int main(int argc, char** argv) { 
+//1st User-Defined Function
+//This Function Include Resturent Name and Menu
+    int menu;
+    kimsdhaba(menu);  // Call the Function 
+
+//2nd User-Defined Function
+//This Function Include Order Invoice System
+    int waiter;
+    orderandbill(waiter); // Call the Function 
+
+//In this Portion of Program User has Two Opptions  1_Conform 2_ Cancel   
+    int pointer;
+    int *options=&pointer;//Pointers Used is this Project
+    bool option=true;
+    while(option){
+	   cout<<" Press 1 to conform your order & Press 2 to cancel your order: ";
+       cin>>*options;
+	   switch(*options){
+		   case 1:
+			  system("cls");
+			  cout<<endl<<"=====================================================================";
+			  cout<<endl<<" Thanks your order is confirm please wait ";
+			  cout<<endl<<"====================================================================="<<endl;
+			  option=false;
+		   break;
+		   	
+		   case 2:
+			  system("cls");
+			  cout<<endl<<"=====================================================================";
+			  cout<<endl<<" Thanks for visiting us your order is cenceled ";
+			  cout<<endl<<"====================================================================="<<endl;
+			  option=false;
+			  return 0;
+		   break;
+		   
+		   default:
+			  cout<<endl<<" Please enter a valid number: "<<endl;
+			  option=true;
+		   break;
+       }
+    
+    }
+	 
+	 
+    string name;
+    long int phonenumber;
+
+    cin.ignore();//This Program Included Because cin Dose Not Function Properly
+
+//In This Program User Gives his Name and Phone Number
+    cout<<"Please enter your name: ";
+    getline(cin,name);
+    cout<<endl<<"Thanks Mr/Ms "<<name;
+    cout<<endl<<"Enter your mobile number: ";
+    cin>>phonenumber;
+    cout<<endl<<phonenumber<<endl;
+    
+    system("cls");
+    
+//Using File Hending
+//This Program Permanently Save Users Data in File 
+    ofstream details("pakistan.txt",ios::app);
+    details<<endl<<"Order # "<<getInvoiceNo()<<"\t"<<"NAME:"<<name <<"\t"<<"Phone No:"<<phonenumber<<"\t"<<"Total Bill:"<<totalBill<<"\t"<<"Total Time:"<<totalTime<<endl;
+    details.close();
+
+	//This Program Reding Data From File and Writing on Consol Screen
+	string lineRead,lastOrder;
+    ifstream printing("pakistan.txt");
+    while(getline(printing,lineRead)){ 
+       lastOrder = lineRead;
+    }
+    cout<<lastOrder<<endl; 
+    
+	return 0;
+}
+
+
+//1 st Function Definition
+void kimsdhaba(int menu){
+//Resturent Name and Menu
+     cout<<endl<<endl<<endl<< setw(120)<<"  Kims Dhaba "<<endl//Resturent Name
+     <<setw(122)<<"       Menu      "<<endl<<setw(130)//Resturent Menu
+
+     <<"1_  Karahi             200 Rs"<<endl<<setw(130)
+     <<"2_  Biryani            160 Rs"<<endl<<setw(130)
+     <<"3_  Pulao              140 Rs"<<endl<<setw(130)
+     <<"4_  Korma              100 Rs"<<endl<<setw(130)
+     <<"5_  Daal Mash          80  Rs"<<endl<<setw(130)
+     <<"6_  Daal Chana         80  Rs"<<endl<<setw(130)
+     <<"7_  kaddu              80  Rs"<<endl<<setw(130)
+     <<"8_  Bhindi             80  Rs"<<endl<<setw(130)
+     <<"9_  Arvi               80  Rs"<<endl<<setw(130)
+     <<"10_ Chany              80  Rs"<<endl<<setw(130)
+     <<"11_ Omelette           40  Rs"<<endl<<setw(130)
+     <<"12_ Fried Egg          30  Rs"<<endl<<setw(130)
+     <<"13_ Boiled Egg         20  Rs"<<endl<<setw(130)
+     <<"14_ Raita              20  Rs"<<endl<<setw(130)
+     <<"15_ Salad              20  Rs"<<endl<<setw(130)
+     <<"16_ Roti               10  Rs"<<endl<<setw(130)
+     <<"17_ Naan               20  Rs"<<endl<<setw(130)
+     <<"18_ Prantha            30  Rs"<<endl<<setw(130)
+     <<"19_ Lasi               80  Rs"<<endl<<setw(130)
+     <<"20_ Badam Dooth        60  Rs"<<endl<<endl<<endl<<endl;
+
+}
+
+
+//2 nd Function Definition
+void orderandbill(int waiter){
+//Using Arrays to Store menu Data
+     string menuItems[25]={" Karahi "," Biryani "," Pulao "," Korma "," Daal Mash "," Daal Chana"," kaddu "," Bhindi"," Arvi  "," Chany "," Omelette  "," Fried Egg "," Boiled Egg "," Raita "," Salad "," Roti "," Naan "," Prantha "," Lasi "," Badam Dooth "};
+     int menuPrice[25]={200,160,140,100,80,80,80,80,80,80,40,30,20,20,20,10,20,30,80,60};
+     int menuTime[25]={15,10,10,10,5,5,5,5,5,5,10,4,4,4,2,2,2,2,2,2};
+     int orderList[50];
+     int orderSeq=0;
+
+//This Function is Taking Order From User
+     int itemnumber;
+     bool item=true;
+     while(item){
+     cout<<setw(180)<<"Plesae enter any item number between 1 to 20 to Place Your Order   AND   Press 0 When You Have Completed Your Order: ";
+     cin>>itemnumber;
+         if(itemnumber<=20 && itemnumber>=1){
+	         orderList[orderSeq] = itemnumber-1;
+	         ++orderSeq;
+         }
+     
+         else if(itemnumber==0){
+	         item=false;
+          }
+
+         else{
+	         cout<<endl<<setw(150)<<"Please Enter a Valid Input...\n";
+		 }
+     }
+
+
+
+     system("cls");
+//Order Invoice Shows The Order no , Total Price ,Total Time
+     if(orderSeq>0){
+         cout<<endl<<"============================Order Invoice============================";
+         for(int i=0;i<orderSeq;i++){
+         	
+	        int INDEX=orderList[i];
+	        cout<<endl<<"Your Order No:"<<i+1<<"  " <<menuItems[INDEX]<<" Price : "<<menuPrice[INDEX];
+	        totalBill+=menuPrice[INDEX];
+            totalTime+=menuTime[INDEX];
+		 }
+         cout<<endl<<"=====================================================================";
+         cout<<endl<<"Total Bill :"<<totalBill<<" - RS\t"<<"Time to serve your order in:"<<totalTime<<" minuts";
+         cout<<endl<<"====================================================================="<<endl<<endl<<endl<<endl<<endl<<endl;
+     }
+     
+	 }
+	 
+//3 rd Function Definition
+int getInvoiceNo(){
+	int InvoiceNo;
+	
+    ifstream myfile("CustomerCounter.txt");
+    myfile >> InvoiceNo;
+    if(InvoiceNo <= 0){
+		InvoiceNo = 1;
+	}
+	else
+	{
+		InvoiceNo++;
+	}
+	
+	ofstream details("CustomerCounter.txt",ios::trunc);
+    details<<InvoiceNo;
+
+	return InvoiceNo;
+}
+
